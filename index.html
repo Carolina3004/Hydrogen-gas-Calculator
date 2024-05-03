@@ -137,15 +137,15 @@
             return p;
         }
         function getTemperature() {
-            var t = parseFloat(document.getElementById("temperatureInput").value);
+            var T = parseFloat(document.getElementById("temperatureInput").value);
             var u = document.getElementById("Temperature-select").value;
 
-            if (u == "&degC;") {
-                t = t + 273.15;
+            if (u == "K") {
+                T = T + 273.15;
             }
 
 
-            return t;
+            return T;
         }
         function getVolume(){
             var V = parseFloat(document.getElementById("volumeInput").value);
@@ -159,8 +159,7 @@
             return V;
         }
 
-        function resultMass() {
-            var m = parseFloat(document.getElementById("massInput").value);
+        function resultMass(m) {
             var u = document.getElementById("Mass-select").value;
 
             if (u == "t") {
@@ -173,7 +172,6 @@
         }
 
         function resultPressure(p) {
-            //var p = parseFloat(document.getElementById("pressureInput").value);
             var u = document.getElementById("Pressure-select").value;
 
             if (u == "hPa") {
@@ -191,19 +189,18 @@
             document.getElementById("pressureInput").value = p; 
         }
 
-        function resultTemperature(t) {
+        function resultTemperature(T) {
             var u = document.getElementById("Temperature-select").value;
 
-            if (u == "&deg;C") {
-                t = t - 273.15;
+            if (u == "K") {
+                T = T - 273.15;
             }
 
 
-            document.getElementById("temperatureInput").value = t;
+            document.getElementById("temperatureInput").value = T;
         }
         
-        function resultVolume(){
-            var V = parseFloat(document.getElementById("volumeInput").value);
+        function resultVolume(V){
             var u = document.getElementById("Volume-select").value;
 
             if (u == "L") {
@@ -224,12 +221,14 @@
                 var p = getPressure();
 
 
-                if(!(p && t && V)) {
+                if(!(p && T && V)) {
                     alert("Missing input value(s)!");
                     return;
                 }
             
-                
+                // T (Temperature en Kelvin)
+                var T = T + 273.15
+
                 // R (constante de gaz)
                 const R = 8.31446261815324;
 
@@ -246,10 +245,13 @@
                 var T = getTemperature();
                 var V = getVolume();
 
-                if(!(m && t && V)) {
+                if(!(m && T && V)) {
                     alert("Missing input value(s)!");
                     return;
                 }
+
+                // T (Temperature en Kelvin)
+                var T = T + 273.15
 
                 // n (nombres de particules)
                 var n = m / 2.01568;
@@ -262,8 +264,6 @@
                 var p = ( n * R * T ) / V
                 p = Math.round(p * 1000) / 1000;
 
-                //document.getElementById("pressureInput").value = p;
-                //document.getElementById("Pressure-select").value = "Pa";
                 resultPressure(p);               
 
             } else if (calc== "t")  {
@@ -291,28 +291,27 @@
             } else {
                 var m = getMass();
                 var p = getPressure();
-                var t = getTemperature();
+                var T = getTemperature();
 
-                if(!(p && t && m)) {
+                if(!(p && T && m)) {
                     alert("Missing input value(s)!");
                     return;
                 }
 
+                // T (Temperature en Kelvin)
+                var T = T + 273.15
 
                 // n (nombres de particules)
 
                 var n = m /2.01568;
 
-                // T (temperture en Kelvin)
-                var T = t + 273.15;
-
                 // R (constante de gaz)
                 const R = 8.31446261815324;
 
                 // V (volume)
-                var V = Math.round((n * R * T) / p * 1000) / 1000;
+                var V = (n * R * T) / p
 
-                resultVolume();
+                resultVolume(V);
   
             }
 
