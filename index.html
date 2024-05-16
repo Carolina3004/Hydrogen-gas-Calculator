@@ -141,7 +141,7 @@
             var u = document.getElementById("Temperature-select").value;
 
             if (u == "K") {
-                T = T + 273.15;
+                T = T - 273.15;
             }
 
 
@@ -192,8 +192,8 @@
         function resultTemperature(T) {
             var u = document.getElementById("Temperature-select").value;
 
-            if (u == "K") {
-                T = T - 273.15;
+            if (u == "&deg;C") {
+                T = T + 273.15;
             }
 
 
@@ -220,7 +220,6 @@
                 var V = getVolume();
                 var p = getPressure();
 
-
                 if(!(p && T && V)) {
                     alert("Missing input value(s)!");
                     return;
@@ -232,9 +231,9 @@
                 // R (constante de gaz)
                 const R = 8.31446261815324;
 
-                 // n (nombres de particules)
-                 var n = (p * V) / (R * T);
-                 
+                // n (nombres de particules)
+                var n = (p * V) / (R * T);
+
                 // m (mass)
                 var m = Math.round(n * 2.01568 * 1000) / 1000;
  
@@ -266,10 +265,10 @@
 
                 resultPressure(p);               
 
-            } else if (calc== "t")  {
-                var m = getMass();
-                var p = getPressure();
-                var V = getVolume();
+ w           } else if (calc== "t")  {
+                var m = getMass(); //g
+                var p = getPressure(); //Pa
+                var V = getVolume(); //m3
 
                 if(!(p && m && V)) {
                     alert("Missing input value(s)!");
@@ -277,14 +276,15 @@
                 }
                 // n (nombres de particules)
 
-                var n = m /2.01568;
+                var n = m / 2.01568;
 
                 // R (constante de gaz)
                 const R = 8.31446261815324;
 
                 // T (temperature en K)
                 
-                var T = (p * V)/ (n * R);
+                var T = (p * V) / (n * R);
+
  
                 resultTemperature(T);              
 
@@ -302,9 +302,9 @@
                 var T = T + 273.15
 
                 // n (nombres de particules)
-
                 var n = m /2.01568;
 
+                
                 // R (constante de gaz)
                 const R = 8.31446261815324;
 
